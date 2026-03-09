@@ -1,0 +1,67 @@
+name: reusable-dotnet-pr-validation
+
+on:
+  workflow_call:
+    inputs:
+      solution-path:
+        required: true
+        type: string
+      dotnet-version:
+        required: true
+        type: string
+      runs-on:
+        required: false
+        type: string
+        default: windows-latest
+      configuration:
+        required: false
+        type: string
+        default: Release
+      enable-clean:
+        required: false
+        type: boolean
+        default: true
+      artifact-name:
+        required: false
+        type: string
+        default: test-results
+
+permissions:
+  contents: read
+
+jobs:
+  build-test:
+    runs-on: ${{ inputs.runs-on }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ inputs.dotnet-version }}
+
+      - name: Clean
+        if: ${{ inputs.enable-clean }}
+        shell: pwsh
+        run: dotnet clean "${{ inputs.solution-path }}" --configuration ${{ inputs.configuration }}
+
+      - name: Restore
+        shell: pwsh
+        run: dotnet restore "${{ inputs.solution-path }}"
+
+      - name: Build
+        shell: pwsh
+        run: dotnet build "${{ inputs.solution-path }}" --configuration ${{ inputs.configuration }} --no-restore
+
+      - name: Test
+        shell: pwsh
+        run: dotnet test "${{ inputs.solution-path }}" --configuration ${{ inputs.configuration }} --no-build --logger "trx;LogFileName=test_results.trx"
+
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.artifact-name }}
+          path: '**/TestResults/*.trx'

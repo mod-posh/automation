@@ -1,0 +1,50 @@
+name: audit-repos
+
+on:
+  workflow_dispatch:
+    inputs:
+      repos:
+        description: Comma-separated repository names. Leave empty to audit all accessible repos.
+        required: false
+        type: string
+  schedule:
+    - cron: '0 14 * * 1'
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run audit
+        shell: pwsh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          $repos = @()
+          if (-not [string]::IsNullOrWhiteSpace('${{ inputs.repos }}')) {
+            $repos = '${{ inputs.repos }}'.Split(',').Trim() | Where-Object { -not [string]::IsNullOrWhiteSpace($_) }
+          }
+
+          if ($repos.Count -gt 0) {
+            ./scripts/audit-repos.ps1 -Org '${{ github.repository_owner }}' -Repos $repos
+          }
+          else {
+            ./scripts/audit-repos.ps1 -Org '${{ github.repository_owner }}'
+          }
+
+      - name: Commit updated reports
+        shell: pwsh
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports/latest/repo-inventory.json reports/latest/repo-inventory.md
+          if ((git status --porcelain).Length -gt 0) {
+            git commit -m 'Update repository inventory report'
+            git push
+          }

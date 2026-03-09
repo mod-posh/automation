@@ -1,0 +1,105 @@
+name: reusable-dependabot-auto-merge
+
+on:
+  workflow_call:
+    inputs:
+      workflow-name:
+        required: false
+        type: string
+        default: pr-validation
+      allow-minor:
+        required: false
+        type: boolean
+        default: true
+      merge-method:
+        required: false
+        type: string
+        default: squash
+      label-name:
+        required: false
+        type: string
+        default: dependabot-auto-merged
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  auto-merge:
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.actor.login == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Find PR for workflow run head branch
+        id: pr
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const headBranch = context.payload.workflow_run.head_branch;
+            const { data: prs } = await github.rest.pulls.list({
+              owner,
+              repo,
+              state: 'open',
+              head: `${owner}:${headBranch}`
+            });
+            if (prs.length === 0) {
+              core.setFailed(`No open PR found for branch ${headBranch}`);
+              return;
+            }
+            const pr = prs[0];
+            core.setOutput('number', String(pr.number));
+            core.setOutput('url', pr.html_url);
+            core.setOutput('author', pr.user.login);
+            core.setOutput('draft', String(pr.draft));
+
+      - name: Stop unless this is a non-draft Dependabot PR
+        if: steps.pr.outputs.author != 'dependabot[bot]' || steps.pr.outputs.draft == 'true'
+        run: |
+          echo "Not an eligible Dependabot PR"
+          exit 0
+
+      - name: Fetch Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Decide merge eligibility
+        id: policy
+        shell: bash
+        run: |
+          update_type='${{ steps.metadata.outputs.update-type }}'
+          allowed='false'
+          if [ "$update_type" = 'version-update:semver-patch' ]; then
+            allowed='true'
+          fi
+          if [ "$update_type" = 'version-update:semver-minor' ] && [ '${{ inputs.allow-minor }}' = 'true' ]; then
+            allowed='true'
+          fi
+          echo "allowed=$allowed" >> "$GITHUB_OUTPUT"
+          echo "update_type=$update_type" >> "$GITHUB_OUTPUT"
+
+      - name: Approve Dependabot PR
+        if: steps.policy.outputs.allowed == 'true'
+        run: gh pr review --approve "${{ steps.pr.outputs.url }}"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Label PR
+        if: steps.policy.outputs.allowed == 'true'
+        run: gh pr edit "${{ steps.pr.outputs.url }}" --add-label "${{ inputs.label-name }}"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Enable auto-merge
+        if: steps.policy.outputs.allowed == 'true'
+        run: gh pr merge --auto --${{ inputs.merge-method }} "${{ steps.pr.outputs.url }}"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Log skipped updates
+        if: steps.policy.outputs.allowed != 'true'
+        run: echo "Skipped auto-merge for update type ${{ steps.policy.outputs.update_type }}"
