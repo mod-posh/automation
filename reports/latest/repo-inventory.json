@@ -1,1 +1,1113 @@
-[]
+[
+  {
+    "Name": ".github",
+    "DefaultBranch": "main",
+    "IsDotNet": false,
+    "IsPowerShell": false,
+    "IsEmptyRepo": false,
+    "HasRepoContent": true,
+    "SolutionPaths": [],
+    "CsprojPaths": [],
+    "PowerShellManifestPaths": [],
+    "PowerShellModulePaths": [],
+    "HasTests": false,
+    "TestPaths": [],
+    "WorkflowPaths": [],
+    "HasValidationWorkflow": false,
+    "ValidationWorkflowPaths": [],
+    "HasDependabotConfig": false,
+    "DependabotPath": null,
+    "DependabotEcosystems": [],
+    "AutoMergeReady": false,
+    "Notes": [
+      "No PR validation workflow detected.",
+      "No .github/dependabot.yml found."
+    ]
+  },
+  {
+    "Name": "AdoMetrics",
+    "DefaultBranch": "main",
+    "IsDotNet": false,
+    "IsPowerShell": true,
+    "IsEmptyRepo": false,
+    "HasRepoContent": true,
+    "SolutionPaths": [],
+    "CsprojPaths": [],
+    "PowerShellManifestPaths": [
+      "AdoMetrics/ModPosh.AdoMetrics.psd1",
+      "PSScriptAnalyzerSettings.psd1"
+    ],
+    "PowerShellModulePaths": [
+      "AdoMetrics/ModPosh.AdoMetrics.psm1"
+    ],
+    "HasTests": true,
+    "TestPaths": [
+      "AdoMetrics/tests/Assert-AdoMetricsRow.Tests.ps1",
+      "AdoMetrics/tests/ConvertTo-AdoMetricRow.Tests.ps1",
+      "AdoMetrics/tests/Export-AdoMetricsJsonl.Tests.ps1",
+      "AdoMetrics/tests/Import-AdoMetricsJsonl.Tests.ps1",
+      "AdoMetrics/tests/Merge-AdoMetricRow.Tests.ps1",
+      "AdoMetrics/tests/New-AdoAuthHeader.Tests.ps1",
+      "AdoMetrics/tests/Repair-AdoMetricRowSchema.Tests.ps1",
+      "AdoMetrics/tests/V1.Tests.ps1"
+    ],
+    "WorkflowPaths": [
+      ".github/workflows/release.yml"
+    ],
+    "HasValidationWorkflow": false,
+    "ValidationWorkflowPaths": [],
+    "HasDependabotConfig": false,
+    "DependabotPath": null,
+    "DependabotEcosystems": [],
+    "AutoMergeReady": false,
+    "Notes": [
+      "No PR validation workflow detected.",
+      "No .github/dependabot.yml found."
+    ]
+  },
+  {
+    "Name": "automation",
+    "DefaultBranch": "main",
+    "IsDotNet": false,
+    "IsPowerShell": false,
+    "IsEmptyRepo": false,
+    "HasRepoContent": true,
+    "SolutionPaths": [],
+    "CsprojPaths": [],
+    "PowerShellManifestPaths": [],
+    "PowerShellModulePaths": [],
+    "HasTests": false,
+    "TestPaths": [],
+    "WorkflowPaths": [
+      ".github/workflows/audit-repos.yml",
+      ".github/workflows/reusable-dependabot-auto-merge.yml",
+      ".github/workflows/reusable-dotnet-pr-validation.yml",
+      ".github/workflows/reusable-powershell-pr-validation.yml"
+    ],
+    "HasValidationWorkflow": true,
+    "ValidationWorkflowPaths": [
+      ".github/workflows/reusable-dotnet-pr-validation.yml",
+      ".github/workflows/reusable-powershell-pr-validation.yml"
+    ],
+    "HasDependabotConfig": false,
+    "DependabotPath": null,
+    "DependabotEcosystems": [],
+    "AutoMergeReady": false,
+    "Notes": [
+      "No .github/dependabot.yml found."
+    ]
+  },
+  {
+    "Name": "BuildAutomation",
+    "DefaultBranch": "main",
+    "IsDotNet": false,
+    "IsPowerShell": true,
+    "IsEmptyRepo": false,
+    "HasRepoContent": true,
+    "SolutionPaths": [],
+    "CsprojPaths": [],
+    "PowerShellManifestPaths": [
+      "PSScriptAnalyzerSettings.psd1"
+    ],
+    "PowerShellModulePaths": [],
+    "HasTests": false,
+    "TestPaths": [],
+    "WorkflowPaths": [],
+    "HasValidationWorkflow": false,
+    "ValidationWorkflowPaths": [],
+    "HasDependabotConfig": false,
+    "DependabotPath": null,
+    "DependabotEcosystems": [],
+    "AutoMergeReady": false,
+    "Notes": [
+      "Looks like PowerShell code exists but no obvious Pester tests were found.",
+      "No PR validation workflow detected.",
+      "No .github/dependabot.yml found."
+    ]
+  },
+  {
+    "Name": "ComputerManagement",
+    "DefaultBranch": "master",
+    "IsDotNet": false,
+    "IsPowerShell": true,
+    "IsEmptyRepo": false,
+    "HasRepoContent": true,
+    "SolutionPaths": [],
+    "CsprojPaths": [],
+    "PowerShellManifestPaths": [
+      "ComputerManagement/ComputerManagement.psd1"
+    ],
+    "PowerShellModulePaths": [
+      "ComputerManagement/ComputerManagement.psm1"
+    ],
+    "HasTests": false,
+    "TestPaths": [],
+    "WorkflowPaths": [],
+    "HasValidationWorkflow": false,
+    "ValidationWorkflowPaths": [],
+    "HasDependabotConfig": false,
+    "DependabotPath": null,
+    "DependabotEcosystems": [],
+    "AutoMergeReady": false,
+    "Notes": [
+      "Looks like PowerShell code exists but no obvious Pester tests were found.",
+      "No PR validation workflow detected.",
+      "No .github/dependabot.yml found."
+    ]
+  },
+  {
+    "Name": "CreatePowerShellManifest",
+    "DefaultBranch": "main",
+    "IsDotNet": false,
+    "IsPowerShell": false,
+    "IsEmptyRepo": false,
+    "HasRepoContent": true,
+    "SolutionPaths": [],
+    "CsprojPaths": [],
+    "PowerShellManifestPaths": [],
+    "PowerShellModulePaths": [],
+    "HasTests": false,
+    "TestPaths": [],
+    "WorkflowPaths": [
+      ".github/workflows/create-releasenotes.yml"
+    ],
+    "HasValidationWorkflow": false,
+    "ValidationWorkflowPaths": [],
+    "HasDependabotConfig": false,
+    "DependabotPath": null,
+    "DependabotEcosystems": [],
+    "AutoMergeReady": false,
+    "Notes": [
+      "No PR validation workflow detected.",
+      "No .github/dependabot.yml found."
+    ]
+  },
+  {
+    "Name": "CreatePowerShellModule",
+    "DefaultBranch": "main",
+    "IsDotNet": false,
+    "IsPowerShell": false,
+    "IsEmptyRepo": false,
+    "HasRepoContent": true,
+    "SolutionPaths": [],
+    "CsprojPaths": [],
+    "PowerShellManifestPaths": [],
+    "PowerShellModulePaths": [],
+    "HasTests": false,
+    "TestPaths": [],
+    "WorkflowPaths": [
+      ".github/workflows/create-releasenotes.yml"
+    ],
+    "HasValidationWorkflow": false,
+    "ValidationWorkflowPaths": [],
+    "HasDependabotConfig": false,
+    "DependabotPath": null,
+    "DependabotEcosystems": [],
+    "AutoMergeReady": false,
+    "Notes": [
+      "No PR validation workflow detected.",
+      "No .github/dependabot.yml found."
+    ]
+  },
+  {
+    "Name": "docs",
+    "DefaultBranch": "main",
+    "IsDotNet": false,
+    "IsPowerShell": false,
+    "IsEmptyRepo": true,
+    "HasRepoContent": false,
+    "SolutionPaths": [],
+    "CsprojPaths": [],
+    "PowerShellManifestPaths": [],
+    "PowerShellModulePaths": [],
+    "HasTests": false,
+    "TestPaths": [],
+    "WorkflowPaths": [],
+    "HasValidationWorkflow": false,
+    "ValidationWorkflowPaths": [],
+    "HasDependabotConfig": false,
+    "DependabotPath": null,
+    "DependabotEcosystems": [],
+    "AutoMergeReady": false,
+    "Notes": [
+      "Repository tree is unavailable (likely empty repository or no commits on default branch).",
+      "No PR validation workflow detected.",
+      "No .github/dependabot.yml found."
+    ]
+  },
+  {
+    "Name": "get-jira-project",
+    "DefaultBranch": "main",
+    "IsDotNet": false,
+    "IsPowerShell": false,
+    "IsEmptyRepo": false,
+    "HasRepoContent": true,
+    "SolutionPaths": [],
+    "CsprojPaths": [],
+    "PowerShellManifestPaths": [],
+    "PowerShellModulePaths": [],
+    "HasTests": false,
+    "TestPaths": [],
+    "WorkflowPaths": [],
+    "HasValidationWorkflow": false,
+    "ValidationWorkflowPaths": [],
+    "HasDependabotConfig": false,
+    "DependabotPath": null,
+    "DependabotEcosystems": [],
+    "AutoMergeReady": false,
+    "Notes": [
+      "No PR validation workflow detected.",
+      "No .github/dependabot.yml found."
+    ]
+  },
+  {
+    "Name": "GetProjectVersion",
+    "DefaultBranch": "main",
+    "IsDotNet": false,
+    "IsPowerShell": false,
+    "IsEmptyRepo": false,
+    "HasRepoContent": true,
+    "SolutionPaths": [],
+    "CsprojPaths": [],
+    "PowerShellManifestPaths": [],
+    "PowerShellModulePaths": [],
+    "HasTests": false,
+    "TestPaths": [],
+    "WorkflowPaths": [
+      ".github/workflows/create-releasenotes.yml"
+    ],
+    "HasValidationWorkflow": false,
+    "ValidationWorkflowPaths": [],
+    "HasDependabotConfig": false,
+    "DependabotPath": null,
+    "DependabotEcosystems": [],
+    "AutoMergeReady": false,
+    "Notes": [
+      "No PR validation workflow detected.",
+      "No .github/dependabot.yml found."
+    ]
+  },
+  {
+    "Name": "Hcl",
+    "DefaultBranch": "main",
+    "IsDotNet": true,
+    "IsPowerShell": false,
+    "IsEmptyRepo": false,
+    "HasRepoContent": true,
+    "SolutionPaths": [
+      "Hcl/Hcl.sln"
+    ],
+    "CsprojPaths": [
+      "Hcl.Tests/Hcl.Tests.csproj",
+      "Hcl/Hcl.csproj"
+    ],
+    "PowerShellManifestPaths": [],
+    "PowerShellModulePaths": [],
+    "HasTests": true,
+    "TestPaths": [
+      "Hcl.Tests/Hcl.Tests.csproj"
+    ],
+    "WorkflowPaths": [
+      ".github/workflows/build.yml",
+      ".github/workflows/notifications.yml",
+      ".github/workflows/release.yml",
+      ".github/workflows/test.yml"
+    ],
+    "HasValidationWorkflow": true,
+    "ValidationWorkflowPaths": [
+      ".github/workflows/test.yml"
+    ],
+    "HasDependabotConfig": false,
+    "DependabotPath": null,
+    "DependabotEcosystems": [],
+    "AutoMergeReady": false,
+    "Notes": [
+      "No .github/dependabot.yml found."
+    ]
+  },
+  {
+    "Name": "HclModule",
+    "DefaultBranch": "main",
+    "IsDotNet": true,
+    "IsPowerShell": false,
+    "IsEmptyRepo": false,
+    "HasRepoContent": true,
+    "SolutionPaths": [
+      "HclModule/HclModule.sln"
+    ],
+    "CsprojPaths": [
+      "HclModule/HclModule.csproj"
+    ],
+    "PowerShellManifestPaths": [],
+    "PowerShellModulePaths": [],
+    "HasTests": false,
+    "TestPaths": [],
+    "WorkflowPaths": [
+      ".github/workflows/build.yml",
+      ".github/workflows/notifications.yml",
+      ".github/workflows/release.yml",
+      ".github/workflows/test.yml"
+    ],
+    "HasValidationWorkflow": true,
+    "ValidationWorkflowPaths": [
+      ".github/workflows/test.yml"
+    ],
+    "HasDependabotConfig": false,
+    "DependabotPath": null,
+    "DependabotEcosystems": [],
+    "AutoMergeReady": false,
+    "Notes": [
+      "Looks like .NET code exists but no obvious .NET test project was found.",
+      "No .github/dependabot.yml found."
+    ]
+  },
+  {
+    "Name": "HelpGenerator",
+    "DefaultBranch": "main",
+    "IsDotNet": true,
+    "IsPowerShell": false,
+    "IsEmptyRepo": false,
+    "HasRepoContent": true,
+    "SolutionPaths": [
+      "src/HelpGenerator.sln"
+    ],
+    "CsprojPaths": [
+      "src/HelpGenerator.Core/HelpGenerator.Core.csproj",
+      "src/HelpGenerator.Powershell/HelpGenerator.Powershell.csproj"
+    ],
+    "PowerShellManifestPaths": [],
+    "PowerShellModulePaths": [],
+    "HasTests": false,
+    "TestPaths": [],
+    "WorkflowPaths": [
+      ".github/workflows/build.yml",
+      ".github/workflows/docs-pr.yml",
+      ".github/workflows/notifications.yml",
+      ".github/workflows/release.yml",
+      ".github/workflows/test.yml"
+    ],
+    "HasValidationWorkflow": true,
+    "ValidationWorkflowPaths": [
+      ".github/workflows/release.yml",
+      ".github/workflows/test.yml"
+    ],
+    "HasDependabotConfig": false,
+    "DependabotPath": null,
+    "DependabotEcosystems": [],
+    "AutoMergeReady": false,
+    "Notes": [
+      "Looks like .NET code exists but no obvious .NET test project was found.",
+      "No .github/dependabot.yml found."
+    ]
+  },
+  {
+    "Name": "Issue2ReleaseNotes",
+    "DefaultBranch": "main",
+    "IsDotNet": false,
+    "IsPowerShell": false,
+    "IsEmptyRepo": false,
+    "HasRepoContent": true,
+    "SolutionPaths": [],
+    "CsprojPaths": [],
+    "PowerShellManifestPaths": [],
+    "PowerShellModulePaths": [],
+    "HasTests": false,
+    "TestPaths": [],
+    "WorkflowPaths": [
+      ".github/workflows/create-releasenotes.yml"
+    ],
+    "HasValidationWorkflow": false,
+    "ValidationWorkflowPaths": [],
+    "HasDependabotConfig": false,
+    "DependabotPath": null,
+    "DependabotEcosystems": [],
+    "AutoMergeReady": false,
+    "Notes": [
+      "No PR validation workflow detected.",
+      "No .github/dependabot.yml found."
+    ]
+  },
+  {
+    "Name": "LocalAutomation",
+    "DefaultBranch": "main",
+    "IsDotNet": true,
+    "IsPowerShell": true,
+    "IsEmptyRepo": false,
+    "HasRepoContent": true,
+    "SolutionPaths": [],
+    "CsprojPaths": [
+      "CSharpProject/CSharpProject/CSharpProject.csproj"
+    ],
+    "PowerShellManifestPaths": [
+      "ComplexModules/MyModule/MyModule.psd1",
+      "ComplexModules/MyModule/NestedModule1/NestedModule1.psd1",
+      "CSharpProject/PSScriptAnalyzerSettings.psd1",
+      "PSScriptAnalyzerSettings.psd1",
+      "SimpleModules/MyModule/MyModule.psd1"
+    ],
+    "PowerShellModulePaths": [
+      "ComplexModules/MyModule/NestedModule1/NestedModule1.psm1",
+      "SimpleModules/MyModule/public/MyModule.psm1"
+    ],
+    "HasTests": false,
+    "TestPaths": [],
+    "WorkflowPaths": [],
+    "HasValidationWorkflow": false,
+    "ValidationWorkflowPaths": [],
+    "HasDependabotConfig": false,
+    "DependabotPath": null,
+    "DependabotEcosystems": [],
+    "AutoMergeReady": false,
+    "Notes": [
+      "Looks like .NET code exists but no obvious .NET test project was found.",
+      "Looks like PowerShell code exists but no obvious Pester tests were found.",
+      "No PR validation workflow detected.",
+      "No .github/dependabot.yml found."
+    ]
+  },
+  {
+    "Name": "Logger",
+    "DefaultBranch": "main",
+    "IsDotNet": true,
+    "IsPowerShell": true,
+    "IsEmptyRepo": false,
+    "HasRepoContent": true,
+    "SolutionPaths": [
+      "Logger/Logger.sln"
+    ],
+    "CsprojPaths": [
+      "Logger.Tests/Logger.Tests.csproj",
+      "Logger/Logger.csproj"
+    ],
+    "PowerShellManifestPaths": [
+      "PSScriptAnalyzerSettings.psd1"
+    ],
+    "PowerShellModulePaths": [],
+    "HasTests": true,
+    "TestPaths": [
+      "Logger.Tests/Logger.Tests.csproj"
+    ],
+    "WorkflowPaths": [
+      ".github/workflows/codeql-analysis.yml",
+      ".github/workflows/main.yml",
+      ".github/workflows/milestone-closed.yml"
+    ],
+    "HasValidationWorkflow": true,
+    "ValidationWorkflowPaths": [
+      ".github/workflows/main.yml"
+    ],
+    "HasDependabotConfig": false,
+    "DependabotPath": null,
+    "DependabotEcosystems": [],
+    "AutoMergeReady": false,
+    "Notes": [
+      "Looks like PowerShell code exists but no obvious Pester tests were found.",
+      "No .github/dependabot.yml found."
+    ]
+  },
+  {
+    "Name": "NewTaggedRelease",
+    "DefaultBranch": "main",
+    "IsDotNet": false,
+    "IsPowerShell": false,
+    "IsEmptyRepo": false,
+    "HasRepoContent": true,
+    "SolutionPaths": [],
+    "CsprojPaths": [],
+    "PowerShellManifestPaths": [],
+    "PowerShellModulePaths": [],
+    "HasTests": false,
+    "TestPaths": [],
+    "WorkflowPaths": [
+      ".github/workflows/create-releasenotes.yml"
+    ],
+    "HasValidationWorkflow": false,
+    "ValidationWorkflowPaths": [],
+    "HasDependabotConfig": false,
+    "DependabotPath": null,
+    "DependabotEcosystems": [],
+    "AutoMergeReady": false,
+    "Notes": [
+      "No PR validation workflow detected.",
+      "No .github/dependabot.yml found."
+    ]
+  },
+  {
+    "Name": "PasswordSafeClient",
+    "DefaultBranch": "main",
+    "IsDotNet": true,
+    "IsPowerShell": false,
+    "IsEmptyRepo": false,
+    "HasRepoContent": true,
+    "SolutionPaths": [
+      "PasswordSafeClient/PasswordSafeClient.sln"
+    ],
+    "CsprojPaths": [
+      "PasswordSafeClient.Tests/PasswordSafeClient.Tests.csproj",
+      "PasswordSafeClient/PasswordSafeClient/PasswordSafeClient.csproj"
+    ],
+    "PowerShellManifestPaths": [],
+    "PowerShellModulePaths": [],
+    "HasTests": true,
+    "TestPaths": [
+      "PasswordSafeClient.Tests/PasswordSafeClient.Tests.csproj"
+    ],
+    "WorkflowPaths": [
+      ".github/workflows/build.yml",
+      ".github/workflows/release.yml",
+      ".github/workflows/test.yml"
+    ],
+    "HasValidationWorkflow": true,
+    "ValidationWorkflowPaths": [
+      ".github/workflows/test.yml"
+    ],
+    "HasDependabotConfig": true,
+    "DependabotPath": ".github/dependabot.yml",
+    "DependabotEcosystems": [
+      "nuget"
+    ],
+    "AutoMergeReady": true,
+    "Notes": []
+  },
+  {
+    "Name": "Pipelines",
+    "DefaultBranch": "main",
+    "IsDotNet": true,
+    "IsPowerShell": true,
+    "IsEmptyRepo": false,
+    "HasRepoContent": true,
+    "SolutionPaths": [
+      "Pipelines/Pipelines.sln"
+    ],
+    "CsprojPaths": [
+      "Pipelines/Pipelines.csproj"
+    ],
+    "PowerShellManifestPaths": [
+      "Pipelines.psd1",
+      "PSScriptAnalyzerSettings.psd1"
+    ],
+    "PowerShellModulePaths": [],
+    "HasTests": true,
+    "TestPaths": [
+      "Pipelines/Tests/CmdletTests/NewAdoJob.Tests.ps1",
+      "Pipelines/Tests/CmdletTests/NewAdoPipeline.Tests.ps1",
+      "Pipelines/Tests/CmdletTests/NewAdoPool.Tests.ps1",
+      "Pipelines/Tests/CmdletTests/NewAdoStage.Tests.ps1",
+      "Pipelines/Tests/CmdletTests/NewAdoTemplate.Tests.ps1",
+      "Pipelines/Tests/CmdletTests/NewGhaJob.Tests.ps1",
+      "Pipelines/Tests/CmdletTests/NewGhaStep.Tests.ps1",
+      "Pipelines/Tests/CmdletTests/NewGhaWorkflow.Tests.ps1",
+      "Pipelines/Tests/CmdletTests/Pipeline.Tests.ps1"
+    ],
+    "WorkflowPaths": [],
+    "HasValidationWorkflow": false,
+    "ValidationWorkflowPaths": [],
+    "HasDependabotConfig": false,
+    "DependabotPath": null,
+    "DependabotEcosystems": [],
+    "AutoMergeReady": false,
+    "Notes": [
+      "Looks like .NET code exists but no obvious .NET test project was found.",
+      "No PR validation workflow detected.",
+      "No .github/dependabot.yml found."
+    ]
+  },
+  {
+    "Name": "Post2BlueSky",
+    "DefaultBranch": "main",
+    "IsDotNet": false,
+    "IsPowerShell": false,
+    "IsEmptyRepo": false,
+    "HasRepoContent": true,
+    "SolutionPaths": [],
+    "CsprojPaths": [],
+    "PowerShellManifestPaths": [],
+    "PowerShellModulePaths": [],
+    "HasTests": false,
+    "TestPaths": [],
+    "WorkflowPaths": [
+      ".github/workflows/create-releasenotes.yml"
+    ],
+    "HasValidationWorkflow": false,
+    "ValidationWorkflowPaths": [],
+    "HasDependabotConfig": false,
+    "DependabotPath": null,
+    "DependabotEcosystems": [],
+    "AutoMergeReady": false,
+    "Notes": [
+      "No PR validation workflow detected.",
+      "No .github/dependabot.yml found."
+    ]
+  },
+  {
+    "Name": "Post2Discord",
+    "DefaultBranch": "main",
+    "IsDotNet": false,
+    "IsPowerShell": false,
+    "IsEmptyRepo": false,
+    "HasRepoContent": true,
+    "SolutionPaths": [],
+    "CsprojPaths": [],
+    "PowerShellManifestPaths": [],
+    "PowerShellModulePaths": [],
+    "HasTests": false,
+    "TestPaths": [],
+    "WorkflowPaths": [
+      ".github/workflows/post2discord.yml"
+    ],
+    "HasValidationWorkflow": false,
+    "ValidationWorkflowPaths": [],
+    "HasDependabotConfig": false,
+    "DependabotPath": null,
+    "DependabotEcosystems": [],
+    "AutoMergeReady": false,
+    "Notes": [
+      "No PR validation workflow detected.",
+      "No .github/dependabot.yml found."
+    ]
+  },
+  {
+    "Name": "PublishPowerShellModule",
+    "DefaultBranch": "main",
+    "IsDotNet": false,
+    "IsPowerShell": false,
+    "IsEmptyRepo": false,
+    "HasRepoContent": true,
+    "SolutionPaths": [],
+    "CsprojPaths": [],
+    "PowerShellManifestPaths": [],
+    "PowerShellModulePaths": [],
+    "HasTests": false,
+    "TestPaths": [],
+    "WorkflowPaths": [],
+    "HasValidationWorkflow": false,
+    "ValidationWorkflowPaths": [],
+    "HasDependabotConfig": false,
+    "DependabotPath": null,
+    "DependabotEcosystems": [],
+    "AutoMergeReady": false,
+    "Notes": [
+      "No PR validation workflow detected.",
+      "No .github/dependabot.yml found."
+    ]
+  },
+  {
+    "Name": "ScorchModule",
+    "DefaultBranch": "main",
+    "IsDotNet": false,
+    "IsPowerShell": true,
+    "IsEmptyRepo": false,
+    "HasRepoContent": true,
+    "SolutionPaths": [],
+    "CsprojPaths": [],
+    "PowerShellManifestPaths": [],
+    "PowerShellModulePaths": [
+      "SCOrchestratorManagement.psm1"
+    ],
+    "HasTests": false,
+    "TestPaths": [],
+    "WorkflowPaths": [],
+    "HasValidationWorkflow": false,
+    "ValidationWorkflowPaths": [],
+    "HasDependabotConfig": false,
+    "DependabotPath": null,
+    "DependabotEcosystems": [],
+    "AutoMergeReady": false,
+    "Notes": [
+      "Looks like PowerShell code exists but no obvious Pester tests were found.",
+      "No PR validation workflow detected.",
+      "No .github/dependabot.yml found."
+    ]
+  },
+  {
+    "Name": "ServiceControlManagement",
+    "DefaultBranch": "master",
+    "IsDotNet": false,
+    "IsPowerShell": false,
+    "IsEmptyRepo": false,
+    "HasRepoContent": true,
+    "SolutionPaths": [],
+    "CsprojPaths": [],
+    "PowerShellManifestPaths": [],
+    "PowerShellModulePaths": [],
+    "HasTests": false,
+    "TestPaths": [],
+    "WorkflowPaths": [],
+    "HasValidationWorkflow": false,
+    "ValidationWorkflowPaths": [],
+    "HasDependabotConfig": false,
+    "DependabotPath": null,
+    "DependabotEcosystems": [],
+    "AutoMergeReady": false,
+    "Notes": [
+      "No PR validation workflow detected.",
+      "No .github/dependabot.yml found."
+    ]
+  },
+  {
+    "Name": "SpnLibrary",
+    "DefaultBranch": "main",
+    "IsDotNet": false,
+    "IsPowerShell": true,
+    "IsEmptyRepo": false,
+    "HasRepoContent": true,
+    "SolutionPaths": [],
+    "CsprojPaths": [],
+    "PowerShellManifestPaths": [
+      "PSScriptAnalyzerSettings.psd1",
+      "SpnLibrary/SpnLibrary.psd1"
+    ],
+    "PowerShellModulePaths": [
+      "SpnLibrary/SpnLibrary.psm1"
+    ],
+    "HasTests": false,
+    "TestPaths": [],
+    "WorkflowPaths": [
+      ".github/workflows/BuildModule.yml",
+      ".github/workflows/NewRelease.yml"
+    ],
+    "HasValidationWorkflow": false,
+    "ValidationWorkflowPaths": [],
+    "HasDependabotConfig": false,
+    "DependabotPath": null,
+    "DependabotEcosystems": [],
+    "AutoMergeReady": false,
+    "Notes": [
+      "Looks like PowerShell code exists but no obvious Pester tests were found.",
+      "No PR validation workflow detected.",
+      "No .github/dependabot.yml found."
+    ]
+  },
+  {
+    "Name": "SqlModule",
+    "DefaultBranch": "main",
+    "IsDotNet": false,
+    "IsPowerShell": true,
+    "IsEmptyRepo": false,
+    "HasRepoContent": true,
+    "SolutionPaths": [],
+    "CsprojPaths": [],
+    "PowerShellManifestPaths": [],
+    "PowerShellModulePaths": [
+      "SqlManagement.psm1"
+    ],
+    "HasTests": false,
+    "TestPaths": [],
+    "WorkflowPaths": [],
+    "HasValidationWorkflow": false,
+    "ValidationWorkflowPaths": [],
+    "HasDependabotConfig": false,
+    "DependabotPath": null,
+    "DependabotEcosystems": [],
+    "AutoMergeReady": false,
+    "Notes": [
+      "Looks like PowerShell code exists but no obvious Pester tests were found.",
+      "No PR validation workflow detected.",
+      "No .github/dependabot.yml found."
+    ]
+  },
+  {
+    "Name": "TerraformRegistry",
+    "DefaultBranch": "main",
+    "IsDotNet": true,
+    "IsPowerShell": true,
+    "IsEmptyRepo": false,
+    "HasRepoContent": true,
+    "SolutionPaths": [
+      "TerraformRegistry/TerraformRegistry.sln"
+    ],
+    "CsprojPaths": [
+      "TerraformRegistry/TerraformRegistry.csproj"
+    ],
+    "PowerShellManifestPaths": [
+      "PSScriptAnalyzerSettings.psd1"
+    ],
+    "PowerShellModulePaths": [],
+    "HasTests": false,
+    "TestPaths": [],
+    "WorkflowPaths": [],
+    "HasValidationWorkflow": false,
+    "ValidationWorkflowPaths": [],
+    "HasDependabotConfig": false,
+    "DependabotPath": null,
+    "DependabotEcosystems": [],
+    "AutoMergeReady": false,
+    "Notes": [
+      "Looks like .NET code exists but no obvious .NET test project was found.",
+      "Looks like PowerShell code exists but no obvious Pester tests were found.",
+      "No PR validation workflow detected.",
+      "No .github/dependabot.yml found."
+    ]
+  },
+  {
+    "Name": "TerraformRegistryClient",
+    "DefaultBranch": "main",
+    "IsDotNet": true,
+    "IsPowerShell": true,
+    "IsEmptyRepo": false,
+    "HasRepoContent": true,
+    "SolutionPaths": [
+      "TerraformRegistryClient/TerraformRegistryClient.sln"
+    ],
+    "CsprojPaths": [
+      "TerraformRegistryClient.Tests/TerraformRegistryClient.Tests.csproj",
+      "TerraformRegistryClient/TerraformRegistryClient.csproj"
+    ],
+    "PowerShellManifestPaths": [
+      "PSScriptAnalyzerSettings.psd1"
+    ],
+    "PowerShellModulePaths": [],
+    "HasTests": true,
+    "TestPaths": [
+      "TerraformRegistryClient.Tests/TerraformRegistryClient.Tests.csproj"
+    ],
+    "WorkflowPaths": [
+      ".github/workflows/BuildProject.yml",
+      ".github/workflows/codeql-analysis.yml",
+      ".github/workflows/NewRelease.yml"
+    ],
+    "HasValidationWorkflow": true,
+    "ValidationWorkflowPaths": [
+      ".github/workflows/BuildProject.yml"
+    ],
+    "HasDependabotConfig": true,
+    "DependabotPath": ".github/dependabot.yml",
+    "DependabotEcosystems": [
+      "nuget"
+    ],
+    "AutoMergeReady": true,
+    "Notes": [
+      "Looks like PowerShell code exists but no obvious Pester tests were found."
+    ]
+  },
+  {
+    "Name": "TestPowerShellModule",
+    "DefaultBranch": "main",
+    "IsDotNet": false,
+    "IsPowerShell": false,
+    "IsEmptyRepo": false,
+    "HasRepoContent": true,
+    "SolutionPaths": [],
+    "CsprojPaths": [],
+    "PowerShellManifestPaths": [],
+    "PowerShellModulePaths": [],
+    "HasTests": false,
+    "TestPaths": [],
+    "WorkflowPaths": [],
+    "HasValidationWorkflow": false,
+    "ValidationWorkflowPaths": [],
+    "HasDependabotConfig": false,
+    "DependabotPath": null,
+    "DependabotEcosystems": [],
+    "AutoMergeReady": false,
+    "Notes": [
+      "No PR validation workflow detected.",
+      "No .github/dependabot.yml found."
+    ]
+  },
+  {
+    "Name": "UpdateReadme",
+    "DefaultBranch": "main",
+    "IsDotNet": false,
+    "IsPowerShell": false,
+    "IsEmptyRepo": false,
+    "HasRepoContent": true,
+    "SolutionPaths": [],
+    "CsprojPaths": [],
+    "PowerShellManifestPaths": [],
+    "PowerShellModulePaths": [],
+    "HasTests": false,
+    "TestPaths": [],
+    "WorkflowPaths": [],
+    "HasValidationWorkflow": false,
+    "ValidationWorkflowPaths": [],
+    "HasDependabotConfig": false,
+    "DependabotPath": null,
+    "DependabotEcosystems": [],
+    "AutoMergeReady": false,
+    "Notes": [
+      "No PR validation workflow detected.",
+      "No .github/dependabot.yml found."
+    ]
+  },
+  {
+    "Name": "wevtutil",
+    "DefaultBranch": "master",
+    "IsDotNet": false,
+    "IsPowerShell": true,
+    "IsEmptyRepo": false,
+    "HasRepoContent": true,
+    "SolutionPaths": [],
+    "CsprojPaths": [],
+    "PowerShellManifestPaths": [
+      "wevtutil/wevtutil.psd1"
+    ],
+    "PowerShellModulePaths": [
+      "wevtutil/wevtutil.psm1"
+    ],
+    "HasTests": false,
+    "TestPaths": [],
+    "WorkflowPaths": [],
+    "HasValidationWorkflow": false,
+    "ValidationWorkflowPaths": [],
+    "HasDependabotConfig": false,
+    "DependabotPath": null,
+    "DependabotEcosystems": [],
+    "AutoMergeReady": false,
+    "Notes": [
+      "Looks like PowerShell code exists but no obvious Pester tests were found.",
+      "No PR validation workflow detected.",
+      "No .github/dependabot.yml found."
+    ]
+  },
+  {
+    "Name": "WinNTProviderModule",
+    "DefaultBranch": "master",
+    "IsDotNet": false,
+    "IsPowerShell": false,
+    "IsEmptyRepo": false,
+    "HasRepoContent": true,
+    "SolutionPaths": [],
+    "CsprojPaths": [],
+    "PowerShellManifestPaths": [],
+    "PowerShellModulePaths": [],
+    "HasTests": false,
+    "TestPaths": [],
+    "WorkflowPaths": [],
+    "HasValidationWorkflow": false,
+    "ValidationWorkflowPaths": [],
+    "HasDependabotConfig": false,
+    "DependabotPath": null,
+    "DependabotEcosystems": [],
+    "AutoMergeReady": false,
+    "Notes": [
+      "No PR validation workflow detected.",
+      "No .github/dependabot.yml found."
+    ]
+  },
+  {
+    "Name": "xml2doc",
+    "DefaultBranch": "main",
+    "IsDotNet": true,
+    "IsPowerShell": false,
+    "IsEmptyRepo": false,
+    "HasRepoContent": true,
+    "SolutionPaths": [
+      "Xml2Doc/Xml2Doc.sln"
+    ],
+    "CsprojPaths": [
+      "Xml2Doc/src/Xml2Doc.Cli/Xml2Doc.Cli.csproj",
+      "Xml2Doc/src/Xml2Doc.Core/Xml2Doc.Core.csproj",
+      "Xml2Doc/src/Xml2Doc.MSBuild/Xml2Doc.MSBuild.csproj",
+      "Xml2Doc/tests/Xml2Doc.Sample/Xml2Doc.Sample.csproj",
+      "Xml2Doc/tests/Xml2Doc.Tests/Xml2Doc.Tests.csproj"
+    ],
+    "PowerShellManifestPaths": [],
+    "PowerShellModulePaths": [],
+    "HasTests": true,
+    "TestPaths": [
+      "Xml2Doc/tests/Xml2Doc.Tests/Xml2Doc.Tests.csproj"
+    ],
+    "WorkflowPaths": [
+      ".github/workflows/build.yml",
+      ".github/workflows/notifications.yml",
+      ".github/workflows/release.yml",
+      ".github/workflows/test.yml"
+    ],
+    "HasValidationWorkflow": true,
+    "ValidationWorkflowPaths": [
+      ".github/workflows/test.yml"
+    ],
+    "HasDependabotConfig": true,
+    "DependabotPath": ".github/dependabot.yml",
+    "DependabotEcosystems": [
+      "github-actions",
+      "nuget"
+    ],
+    "AutoMergeReady": true,
+    "Notes": []
+  },
+  {
+    "Name": "XmlModule",
+    "DefaultBranch": "master",
+    "IsDotNet": false,
+    "IsPowerShell": true,
+    "IsEmptyRepo": false,
+    "HasRepoContent": true,
+    "SolutionPaths": [],
+    "CsprojPaths": [],
+    "PowerShellManifestPaths": [
+      "xmlModule/xmlModule.psd1"
+    ],
+    "PowerShellModulePaths": [
+      "xmlModule/xmlModule.psm1"
+    ],
+    "HasTests": false,
+    "TestPaths": [],
+    "WorkflowPaths": [],
+    "HasValidationWorkflow": false,
+    "ValidationWorkflowPaths": [],
+    "HasDependabotConfig": false,
+    "DependabotPath": null,
+    "DependabotEcosystems": [],
+    "AutoMergeReady": false,
+    "Notes": [
+      "Looks like PowerShell code exists but no obvious Pester tests were found.",
+      "No PR validation workflow detected.",
+      "No .github/dependabot.yml found."
+    ]
+  },
+  {
+    "Name": "yaml2doc",
+    "DefaultBranch": "main",
+    "IsDotNet": true,
+    "IsPowerShell": false,
+    "IsEmptyRepo": false,
+    "HasRepoContent": true,
+    "SolutionPaths": [
+      "Yaml2Doc.sln"
+    ],
+    "CsprojPaths": [
+      "src/Yaml2Doc.Cli/Yaml2Doc.Cli.csproj",
+      "src/Yaml2Doc.Core/Yaml2Doc.Core.csproj",
+      "src/Yaml2Doc.Markdown/Yaml2Doc.Markdown.csproj",
+      "tests/Yaml2Doc.Core.Tests/Yaml2Doc.Core.Tests.csproj"
+    ],
+    "PowerShellManifestPaths": [],
+    "PowerShellModulePaths": [],
+    "HasTests": true,
+    "TestPaths": [
+      "tests/Yaml2Doc.Core.Tests",
+      "tests/Yaml2Doc.Core.Tests/AzurePipelinesDialectTests.cs",
+      "tests/Yaml2Doc.Core.Tests/BasicMarkdownRendererTests.cs",
+      "tests/Yaml2Doc.Core.Tests/GitHubActionsDialectTests.cs",
+      "tests/Yaml2Doc.Core.Tests/PipelineDocumentTests.cs",
+      "tests/Yaml2Doc.Core.Tests/StandardGoldenIntegrationTests.cs",
+      "tests/Yaml2Doc.Core.Tests/StandardYamlDialectTests.cs",
+      "tests/Yaml2Doc.Core.Tests/StandardYamlRegressionTests.cs",
+      "tests/Yaml2Doc.Core.Tests/Yaml2Doc.Core.Tests.csproj",
+      "tests/Yaml2Doc.Core.Tests/Yaml2DocCliTests.cs",
+      "tests/Yaml2Doc.Core.Tests/Yaml2DocEngineTests.cs",
+      "tests/Yaml2Doc.Core.Tests/Yaml2DocRegistryTests.cs",
+      "tests/Yaml2Doc.Core.Tests/YamlLoaderTests.cs"
+    ],
+    "WorkflowPaths": [
+      ".github/workflows/build.yml",
+      ".github/workflows/notifications.yml",
+      ".github/workflows/release.yml",
+      ".github/workflows/test.yml"
+    ],
+    "HasValidationWorkflow": true,
+    "ValidationWorkflowPaths": [
+      ".github/workflows/test.yml"
+    ],
+    "HasDependabotConfig": true,
+    "DependabotPath": ".github/dependabot.yml",
+    "DependabotEcosystems": [
+      "github-actions",
+      "nuget"
+    ],
+    "AutoMergeReady": true,
+    "Notes": []
+  }
+]
