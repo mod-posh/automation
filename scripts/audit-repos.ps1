@@ -48,7 +48,13 @@ trap {
 function Invoke-GitHubApi {
     param(
         [Parameter(Mandatory)]
-        [string]$Uri
+        [string]$Uri,
+
+        [Parameter()]
+        [switch]$AllowNotFound,
+
+        [Parameter()]
+        [switch]$AllowConflict
     )
 
     if ([string]::IsNullOrWhiteSpace($Token)) {
@@ -61,8 +67,35 @@ function Invoke-GitHubApi {
         'User-Agent'  = 'mod-posh-automation-audit'
     }
 
-    Write-Verbose "GET $Uri"
-    Invoke-RestMethod -Uri $Uri -Headers $headers -Method Get
+    try {
+        Write-Verbose "GET $Uri"
+        Invoke-RestMethod -Uri $Uri -Headers $headers -Method Get
+    }
+    catch {
+        $statusCode = $null
+        try {
+            $statusCode = [int]$_.Exception.Response.StatusCode
+        }
+        catch {
+        }
+
+        if ($AllowNotFound -and $statusCode -eq 404) {
+            Write-Verbose "GET $Uri -> 404 (allowed)"
+            return $null
+        }
+
+        if ($AllowConflict -and $statusCode -eq 409) {
+            Write-Verbose "GET $Uri -> 409 (allowed)"
+            return $null
+        }
+
+        Write-Host "GitHub API call failed: $Uri" -ForegroundColor Red
+        if ($statusCode) {
+            Write-Host "StatusCode: $statusCode" -ForegroundColor Red
+        }
+
+        throw
+    }
 }
 
 function Get-OrgRepos {
@@ -113,14 +146,41 @@ function Get-RepoTree {
     )
 
     $repoInfo = Invoke-GitHubApi -Uri "https://api.github.com/repos/${Org}/${Repo}"
-    $defaultBranch = $repoInfo.default_branch
-    $treeUrl = "https://api.github.com/repos/${Org}/${Repo}/git/trees/${defaultBranch}?recursive=1"
-    $treeInfo = Invoke-GitHubApi -Uri $treeUrl
 
-    [pscustomobject]@{
+    $defaultBranch = $repoInfo.default_branch
+    $isArchived = $repoInfo.archived
+    $isDisabled = $repoInfo.disabled
+    $size = $repoInfo.size
+
+    if ([string]::IsNullOrWhiteSpace($defaultBranch)) {
+        return [pscustomobject]@{
+            Repo          = $Repo
+            DefaultBranch = $null
+            Tree          = @()
+            IsEmpty       = $true
+            Notes         = @("Repository has no default branch.")
+        }
+    }
+
+    $treeUrl = "https://api.github.com/repos/${Org}/${Repo}/git/trees/${defaultBranch}?recursive=1"
+    $treeInfo = Invoke-GitHubApi -Uri $treeUrl -AllowConflict
+
+    if ($null -eq $treeInfo) {
+        return [pscustomobject]@{
+            Repo          = $Repo
+            DefaultBranch = $defaultBranch
+            Tree          = @()
+            IsEmpty       = $true
+            Notes         = @("Repository tree is unavailable (likely empty repository or no commits on default branch).")
+        }
+    }
+
+    return [pscustomobject]@{
         Repo          = $Repo
         DefaultBranch = $defaultBranch
         Tree          = @($treeInfo.tree)
+        IsEmpty       = $false
+        Notes         = @()
     }
 }
 
@@ -154,13 +214,12 @@ function Get-RepoContents {
     $encodedPath = [uri]::EscapeDataString($Path)
     $uri = "https://api.github.com/repos/${Org}/${Repo}/contents/${encodedPath}"
 
-    try {
-        Invoke-GitHubApi -Uri $uri
-    }
-    catch {
+    $result = Invoke-GitHubApi -Uri $uri -AllowNotFound
+    if ($null -eq $result) {
         Write-Verbose "Could not read ${Repo}:${Path}"
-        return $null
     }
+
+    return $result
 }
 
 function Get-FileText {
@@ -240,6 +299,11 @@ function Get-RepoClassification {
     $repoTree = Get-RepoTree -Org $Org -Repo $Repo
     $tree = @($repoTree.Tree)
 
+    $notes = New-Object System.Collections.Generic.List[string]
+    foreach ($note in @($repoTree.Notes)) {
+        $notes.Add($note)
+    }
+
     $solutionPaths = @(Get-MatchingPaths -Tree $tree -Patterns @('*.sln'))
     $csprojPaths = @(Get-MatchingPaths -Tree $tree -Patterns @('*.csproj'))
     $psd1Paths = @(Get-MatchingPaths -Tree $tree -Patterns @('*.psd1'))
@@ -258,8 +322,7 @@ function Get-RepoClassification {
 
     $hasTests = (@($hasDotNetTests).Count -gt 0) -or (@($hasPsTests).Count -gt 0)
     $hasValidationWorkflow = @($workflowInfo | Where-Object { $_.LooksLikeValidation }).Count -gt 0
-
-    $notes = New-Object System.Collections.Generic.List[string]
+    $hasRepoContent = @($tree).Count -gt 0
 
     if ($isDotNet -and @($hasDotNetTests).Count -eq 0) {
         $notes.Add('Looks like .NET code exists but no obvious .NET test project was found.')
@@ -282,6 +345,8 @@ function Get-RepoClassification {
         DefaultBranch           = $repoTree.DefaultBranch
         IsDotNet                = $isDotNet
         IsPowerShell            = $isPowerShell
+        IsEmptyRepo             = $repoTree.IsEmpty
+        HasRepoContent          = $hasRepoContent
         SolutionPaths           = @($solutionPaths)
         CsprojPaths             = @($csprojPaths)
         PowerShellManifestPaths = @($psd1Paths)
@@ -375,7 +440,28 @@ $inventory = foreach ($repo in @($repoNames)) {
             Write-Host "Statement : $($inv.Line.Trim())"
         }
 
-        throw
+        [pscustomobject]@{
+            Name                    = $repo
+            DefaultBranch           = $null
+            IsDotNet                = $false
+            IsPowerShell            = $false
+            IsEmptyRepo             = $false
+            HasRepoContent          = $false
+            SolutionPaths           = @()
+            CsprojPaths             = @()
+            PowerShellManifestPaths = @()
+            PowerShellModulePaths   = @()
+            HasTests                = $false
+            TestPaths               = @()
+            WorkflowPaths           = @()
+            HasValidationWorkflow   = $false
+            ValidationWorkflowPaths = @()
+            HasDependabotConfig     = $false
+            DependabotPath          = $null
+            DependabotEcosystems    = @()
+            AutoMergeReady          = $false
+            Notes                   = @("Audit failed: $($err.Exception.Message)")
+        }
     }
 }
 
