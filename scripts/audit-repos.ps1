@@ -77,13 +77,28 @@ function Get-OrgRepos {
 
     do {
         $uri = "https://api.github.com/orgs/${Org}/repos?per_page=100&page=$page"
-        $result = @(Invoke-GitHubApi -Uri $uri)
+        $rawResult = Invoke-GitHubApi -Uri $uri
+
+        $result = if ($null -eq $rawResult) {
+            @()
+        }
+        elseif ($rawResult -is [System.Array]) {
+            $rawResult
+        }
+        else {
+            @($rawResult)
+        }
 
         if (@($result).Count -eq 0) {
             break
         }
 
-        $names += @($result | ForEach-Object { $_.name })
+        $names += @(
+            $result |
+            Where-Object { $null -ne $_ -and $_.PSObject.Properties['name'] } |
+            ForEach-Object { $_.name }
+        )
+
         $page++
     }
     while (@($result).Count -gt 0)
