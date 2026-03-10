@@ -68,9 +68,9 @@ function Get-RepoTree {
         [string]$Repo
     )
 
-    $repoInfo = Invoke-GitHubApi -Uri "https://api.github.com/repos/$Org/$Repo"
+    $repoInfo = Invoke-GitHubApi -Uri "https://api.github.com/repos/${Org}/${Repo}"
     $defaultBranch = $repoInfo.default_branch
-    $treeUrl = "https://api.github.com/repos/$Org/$Repo/git/trees/$defaultBranch?recursive=1"
+    $treeUrl = "https://api.github.com/repos/${Org}/${Repo}/git/trees/${defaultBranch}?recursive=1"
     $treeInfo = Invoke-GitHubApi -Uri $treeUrl
 
     [pscustomobject]@{
