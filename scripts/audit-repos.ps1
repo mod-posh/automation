@@ -388,8 +388,8 @@ function New-MarkdownReport {
     $lines.Add('')
     $lines.Add('## Inventory')
     $lines.Add('')
-    $lines.Add('| Repo | Type | Tests | PR Validation | Dependabot | Auto-Merge Ready |')
-    $lines.Add('|---|---|---:|---:|---:|---:|')
+    $lines.Add('| Repo | Type | Tests | PR Validation | Dependabot | Auto-Merge Ready | Notes |')
+    $lines.Add('|---|---|---:|---:|---:|---:|---|')
 
     foreach ($repo in @($Inventory | Sort-Object Name)) {
         $type = if ($repo.IsDotNet -and $repo.IsPowerShell) {
@@ -405,15 +405,16 @@ function New-MarkdownReport {
             'Other'
         }
 
-        $lines.Add("| $($repo.Name) | $type | $($repo.HasTests) | $($repo.HasValidationWorkflow) | $($repo.HasDependabotConfig) | $($repo.AutoMergeReady) |")
-
-        if (@($repo.Notes).Count -gt 0) {
-            $lines.Add('')
-            foreach ($note in @($repo.Notes)) {
-                $lines.Add("- **$($repo.Name):** $note")
-            }
-            $lines.Add('')
+        $notesText = if (@($repo.Notes).Count -gt 0) {
+            ((@($repo.Notes) | ForEach-Object {
+                    ($_ -replace '\|', '\|')
+                }) -join '<br>')
         }
+        else {
+            ''
+        }
+
+        $lines.Add("| $($repo.Name) | $type | $($repo.HasTests) | $($repo.HasValidationWorkflow) | $($repo.HasDependabotConfig) | $($repo.AutoMergeReady) | $notesText |")
     }
 
     return ($lines -join "`n")
