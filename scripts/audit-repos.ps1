@@ -18,6 +18,32 @@ param(
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
+$VerbosePreference = 'Continue'
+
+trap {
+    $err = $_
+    $inv = $err.InvocationInfo
+
+    Write-Host ''
+    Write-Host '==== UNHANDLED ERROR ====' -ForegroundColor Red
+    Write-Host "Message     : $($err.Exception.Message)" -ForegroundColor Red
+    Write-Host "Category    : $($err.CategoryInfo)" -ForegroundColor Yellow
+
+    if ($inv) {
+        Write-Host "Script      : $($inv.ScriptName)"
+        Write-Host "Function    : $($inv.MyCommand)"
+        Write-Host "Line        : $($inv.ScriptLineNumber)"
+        Write-Host "Position    : $($inv.OffsetInLine)"
+        Write-Host "Statement   : $($inv.Line.Trim())"
+    }
+
+    if ($err.ScriptStackTrace) {
+        Write-Host 'StackTrace  :' -ForegroundColor Yellow
+        Write-Host $err.ScriptStackTrace
+    }
+
+    exit 1
+}
 
 function Invoke-GitHubApi {
     param(
@@ -35,31 +61,34 @@ function Invoke-GitHubApi {
         'User-Agent'  = 'mod-posh-automation-audit'
     }
 
+    Write-Verbose "GET $Uri"
     Invoke-RestMethod -Uri $Uri -Headers $headers -Method Get
 }
 
 function Get-OrgRepos {
     param([string]$Org)
 
-    if ($Repos.Count -gt 0) {
-        return $Repos
+    if (@($Repos).Count -gt 0) {
+        return @($Repos)
     }
 
     $page = 1
     $names = @()
 
     do {
-        $uri = "https://api.github.com/orgs/$Org/repos?per_page=100&page=$page"
-        $result = Invoke-GitHubApi -Uri $uri
+        $uri = "https://api.github.com/orgs/${Org}/repos?per_page=100&page=$page"
+        $result = @(Invoke-GitHubApi -Uri $uri)
 
-        if (-not $result) { break }
+        if (@($result).Count -eq 0) {
+            break
+        }
 
-        $names += @($result.name)
+        $names += @($result | ForEach-Object { $_.name })
         $page++
     }
-    while ($result.Count -gt 0)
+    while (@($result).Count -gt 0)
 
-    $names | Sort-Object -Unique
+    return @($names | Sort-Object -Unique)
 }
 
 function Get-RepoTree {
@@ -88,8 +117,8 @@ function Get-MatchingPaths {
 
     $matches = New-Object System.Collections.Generic.List[string]
 
-    foreach ($item in $Tree) {
-        foreach ($pattern in $Patterns) {
+    foreach ($item in @($Tree)) {
+        foreach ($pattern in @($Patterns)) {
             if ($item.path -like $pattern) {
                 $matches.Add($item.path)
                 break
@@ -97,7 +126,7 @@ function Get-MatchingPaths {
         }
     }
 
-    $matches | Sort-Object -Unique
+    return @($matches | Sort-Object -Unique)
 }
 
 function Get-RepoContents {
@@ -108,12 +137,13 @@ function Get-RepoContents {
     )
 
     $encodedPath = [uri]::EscapeDataString($Path)
-    $uri = "https://api.github.com/repos/$Org/$Repo/contents/$encodedPath"
+    $uri = "https://api.github.com/repos/${Org}/${Repo}/contents/${encodedPath}"
 
     try {
         Invoke-GitHubApi -Uri $uri
     }
     catch {
+        Write-Verbose "Could not read ${Repo}:${Path}"
         return $null
     }
 }
@@ -130,7 +160,7 @@ function Get-FileText {
     if (-not $content.content) { return $null }
 
     $bytes = [Convert]::FromBase64String(($content.content -replace "`n", ''))
-    [Text.Encoding]::UTF8.GetString($bytes)
+    return [Text.Encoding]::UTF8.GetString($bytes)
 }
 
 function Get-WorkflowClassification {
@@ -140,7 +170,7 @@ function Get-WorkflowClassification {
         [string[]]$WorkflowPaths
     )
 
-    $results = foreach ($workflowPath in $WorkflowPaths) {
+    $results = foreach ($workflowPath in @($WorkflowPaths)) {
         $text = Get-FileText -Org $Org -Repo $Repo -Path $workflowPath
         if (-not $text) { continue }
 
@@ -154,7 +184,7 @@ function Get-WorkflowClassification {
         }
     }
 
-    @($results)
+    return @($results)
 }
 
 function Get-DependabotSummary {
@@ -179,10 +209,10 @@ function Get-DependabotSummary {
         ForEach-Object { $_.Groups[1].Value }
     ) | Sort-Object -Unique
 
-    [pscustomobject]@{
+    return [pscustomobject]@{
         HasDependabotConfig = $true
         Path                = $path
-        Ecosystems          = $ecosystems
+        Ecosystems          = @($ecosystems)
     }
 }
 
@@ -193,34 +223,34 @@ function Get-RepoClassification {
     )
 
     $repoTree = Get-RepoTree -Org $Org -Repo $Repo
-    $tree = $repoTree.Tree
+    $tree = @($repoTree.Tree)
 
-    $solutionPaths = Get-MatchingPaths -Tree $tree -Patterns @('*.sln')
-    $csprojPaths = Get-MatchingPaths -Tree $tree -Patterns @('*.csproj')
-    $psd1Paths = Get-MatchingPaths -Tree $tree -Patterns @('*.psd1')
-    $psm1Paths = Get-MatchingPaths -Tree $tree -Patterns @('*.psm1')
-    $workflowPaths = Get-MatchingPaths -Tree $tree -Patterns @('.github/workflows/*.yml', '.github/workflows/*.yaml')
-    $testPaths = Get-MatchingPaths -Tree $tree -Patterns @('*Tests.csproj', 'tests/*', 'tests/**/*', '*.Tests.ps1')
+    $solutionPaths = @(Get-MatchingPaths -Tree $tree -Patterns @('*.sln'))
+    $csprojPaths = @(Get-MatchingPaths -Tree $tree -Patterns @('*.csproj'))
+    $psd1Paths = @(Get-MatchingPaths -Tree $tree -Patterns @('*.psd1'))
+    $psm1Paths = @(Get-MatchingPaths -Tree $tree -Patterns @('*.psm1'))
+    $workflowPaths = @(Get-MatchingPaths -Tree $tree -Patterns @('.github/workflows/*.yml', '.github/workflows/*.yaml'))
+    $testPaths = @(Get-MatchingPaths -Tree $tree -Patterns @('*Tests.csproj', 'tests/*', 'tests/**/*', '*.Tests.ps1'))
 
-    $workflowInfo = Get-WorkflowClassification -Org $Org -Repo $Repo -WorkflowPaths $workflowPaths
+    $workflowInfo = @(Get-WorkflowClassification -Org $Org -Repo $Repo -WorkflowPaths $workflowPaths)
     $dependabot = Get-DependabotSummary -Org $Org -Repo $Repo
 
-    $isDotNet = $solutionPaths.Count -gt 0 -or $csprojPaths.Count -gt 0
-    $isPowerShell = $psd1Paths.Count -gt 0 -or $psm1Paths.Count -gt 0
+    $isDotNet = (@($solutionPaths).Count -gt 0) -or (@($csprojPaths).Count -gt 0)
+    $isPowerShell = (@($psd1Paths).Count -gt 0) -or (@($psm1Paths).Count -gt 0)
 
     $hasDotNetTests = @($testPaths | Where-Object { $_ -like '*Tests.csproj' })
     $hasPsTests = @($testPaths | Where-Object { $_ -like '*.Tests.ps1' -or $_ -like 'tests/*' })
 
-    $hasTests = ($hasDotNetTests.Count -gt 0) -or ($hasPsTests.Count -gt 0)
+    $hasTests = (@($hasDotNetTests).Count -gt 0) -or (@($hasPsTests).Count -gt 0)
     $hasValidationWorkflow = @($workflowInfo | Where-Object { $_.LooksLikeValidation }).Count -gt 0
 
     $notes = New-Object System.Collections.Generic.List[string]
 
-    if ($isDotNet -and $hasDotNetTests.Count -eq 0) {
+    if ($isDotNet -and @($hasDotNetTests).Count -eq 0) {
         $notes.Add('Looks like .NET code exists but no obvious .NET test project was found.')
     }
 
-    if ($isPowerShell -and $hasPsTests.Count -eq 0) {
+    if ($isPowerShell -and @($hasPsTests).Count -eq 0) {
         $notes.Add('Looks like PowerShell code exists but no obvious Pester tests were found.')
     }
 
@@ -232,7 +262,7 @@ function Get-RepoClassification {
         $notes.Add('No .github/dependabot.yml found.')
     }
 
-    [pscustomobject]@{
+    return [pscustomobject]@{
         Name                    = $Repo
         DefaultBranch           = $repoTree.DefaultBranch
         IsDotNet                = $isDotNet
@@ -259,7 +289,7 @@ function New-MarkdownReport {
         [object[]]$Inventory
     )
 
-    $total = $Inventory.Count
+    $total = @($Inventory).Count
     $ready = @($Inventory | Where-Object AutoMergeReady).Count
     $hasTests = @($Inventory | Where-Object HasTests).Count
     $hasWorkflows = @($Inventory | Where-Object HasValidationWorkflow).Count
@@ -281,7 +311,7 @@ function New-MarkdownReport {
     $lines.Add('| Repo | Type | Tests | PR Validation | Dependabot | Auto-Merge Ready |')
     $lines.Add('|---|---|---:|---:|---:|---:|')
 
-    foreach ($repo in $Inventory | Sort-Object Name) {
+    foreach ($repo in @($Inventory | Sort-Object Name)) {
         $type = if ($repo.IsDotNet -and $repo.IsPowerShell) {
             '.NET + PowerShell'
         }
@@ -297,21 +327,41 @@ function New-MarkdownReport {
 
         $lines.Add("| $($repo.Name) | $type | $($repo.HasTests) | $($repo.HasValidationWorkflow) | $($repo.HasDependabotConfig) | $($repo.AutoMergeReady) |")
 
-        if ($repo.Notes.Count -gt 0) {
+        if (@($repo.Notes).Count -gt 0) {
             $lines.Add('')
-            foreach ($note in $repo.Notes) {
+            foreach ($note in @($repo.Notes)) {
                 $lines.Add("- **$($repo.Name):** $note")
             }
             $lines.Add('')
         }
     }
 
-    $lines -join "`n"
+    return ($lines -join "`n")
 }
 
-$repoNames = Get-OrgRepos -Org $Org
-$inventory = foreach ($repo in $repoNames) {
-    Get-RepoClassification -Org $Org -Repo $repo
+$repoNames = @(Get-OrgRepos -Org $Org)
+
+$inventory = foreach ($repo in @($repoNames)) {
+    try {
+        Write-Host "Auditing repo: $repo" -ForegroundColor Cyan
+        Get-RepoClassification -Org $Org -Repo $repo
+    }
+    catch {
+        $err = $_
+        $inv = $err.InvocationInfo
+
+        Write-Host ''
+        Write-Host "FAILED while auditing repo: $repo" -ForegroundColor Red
+        Write-Host "Message   : $($err.Exception.Message)" -ForegroundColor Red
+
+        if ($inv) {
+            Write-Host "Function  : $($inv.MyCommand)"
+            Write-Host "Line      : $($inv.ScriptLineNumber)"
+            Write-Host "Statement : $($inv.Line.Trim())"
+        }
+
+        throw
+    }
 }
 
 $null = New-Item -ItemType Directory -Force -Path ([IO.Path]::GetDirectoryName((Resolve-Path -LiteralPath .).Path + '/' + $OutputJson))
