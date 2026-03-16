@@ -1010,6 +1010,8 @@
     ],
     "WorkflowPaths": [
       ".github/workflows/build.yml",
+      ".github/workflows/cli-integration.yml",
+      ".github/workflows/msbuild-integration.yml",
       ".github/workflows/notifications.yml",
       ".github/workflows/release.yml",
       ".github/workflows/test.yml"
