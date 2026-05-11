@@ -16,7 +16,7 @@
 | AdoMetrics | PowerShell | True | False | False | False | No PR validation workflow detected.<br>No .github/dependabot.yml found. |
 | automation | Other | False | True | False | False | No .github/dependabot.yml found. |
 | BuildAutomation | PowerShell | False | False | False | False | Looks like PowerShell code exists but no obvious Pester tests were found.<br>No PR validation workflow detected.<br>No .github/dependabot.yml found. |
-| ComputerManagement | PowerShell | False | False | False | False | Looks like PowerShell code exists but no obvious Pester tests were found.<br>No PR validation workflow detected.<br>No .github/dependabot.yml found. |
+| ComputerManagement | Other | False | False | False | False | Audit failed: Response status code does not indicate success: 504 (Gateway Timeout). |
 | CreatePowerShellManifest | Other | False | False | False | False | No PR validation workflow detected.<br>No .github/dependabot.yml found. |
 | CreatePowerShellModule | Other | False | False | False | False | No PR validation workflow detected.<br>No .github/dependabot.yml found. |
 | docs | Other | False | False | False | False | Repository tree is unavailable (likely empty repository or no commits on default branch).<br>No PR validation workflow detected.<br>No .github/dependabot.yml found. |
