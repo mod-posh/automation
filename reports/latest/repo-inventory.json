@@ -127,15 +127,19 @@
   },
   {
     "Name": "ComputerManagement",
-    "DefaultBranch": null,
+    "DefaultBranch": "master",
     "IsDotNet": false,
-    "IsPowerShell": false,
+    "IsPowerShell": true,
     "IsEmptyRepo": false,
-    "HasRepoContent": false,
+    "HasRepoContent": true,
     "SolutionPaths": [],
     "CsprojPaths": [],
-    "PowerShellManifestPaths": [],
-    "PowerShellModulePaths": [],
+    "PowerShellManifestPaths": [
+      "ComputerManagement/ComputerManagement.psd1"
+    ],
+    "PowerShellModulePaths": [
+      "ComputerManagement/ComputerManagement.psm1"
+    ],
     "HasTests": false,
     "TestPaths": [],
     "WorkflowPaths": [],
@@ -146,7 +150,9 @@
     "DependabotEcosystems": [],
     "AutoMergeReady": false,
     "Notes": [
-      "Audit failed: Response status code does not indicate success: 504 (Gateway Timeout)."
+      "Looks like PowerShell code exists but no obvious Pester tests were found.",
+      "No PR validation workflow detected.",
+      "No .github/dependabot.yml found."
     ]
   },
   {
